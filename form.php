@@ -1,6 +1,15 @@
 <?php
 
-$result = array();
+$error = "";
+
+function formCheck($check_data,$data_name,$dataLenLimit) {
+
+    if($check_data === ""){
+        return " $data_name が入力されていません";
+    }else if(mb_strlen($check_data) > $dataLenLimit){
+        return " $data_name は $dataLenLimit 文字以内で書き込んでください";
+    }
+}
 
 if(isset($_POST["submit"])){
 
@@ -8,29 +17,39 @@ if(isset($_POST["submit"])){
     $contributor_name = $_POST["contributor_name"];
     $title = $_POST["title"];
     $textdata = $_POST["textdata"];
-    $error_flag = False;
 
-    if($contributor_name === ""){
-        $result['nameNull'] = "お名前が入力されていません";
+
+    $error = formCheck($contributor_name,"お名前","20");
+    if(empty($error)){
+
+        $error =  formCheck($title,"タイトル","40");
+    }
+    if(empty($error)){
+        $error = formCheck($textdata,"メッセージ","140");
+    }
+
+/*    if($contributor_name === ""){
+        $result[] = "お名前が入力されていません";
         $error_flag = True;
-    }else if(mb_strlen($contributor_name) > 20){
+    }else if(mb_strlen($contributor_name) > 3){
         $result['nameOver'] = "お名前は20文字以内で書き込んでください";
         $error_flag = True;
     }else if($title === ""){
         $result['titleNull'] = "タイトルが入力されていません";
         $error_flag = True;
-    }else if(mb_strlen($title) > 40){
+    }else if(mb_strlen($title) > 5){
         $result['titleOver'] = "タイトルは40文字以内で書き込んでください";
         $error_flag = True;
     }else if($textdata === ""){
         $result['textdataNull'] = "メッセージが入力されていません";
         $error_flag = True;
-    }else if(mb_strlen($textdata) > 140){
+    }else if(mb_strlen($textdata) > 5){
         $result['textOver'] = "メッセージは140文字以内で書き込んでください";
         $error_flag = True;
-    }
+    }*/
 
-    if($error_flag == False) {
+
+    if(empty($error)) {
         try {
             $dsn = 'mysql:dbname=rudel_mysql_test;charset=utf8mb4;host=localhost';
             $user = 'root';
@@ -46,22 +65,20 @@ if(isset($_POST["submit"])){
             $stmt = $pdo->query($sql);
 
             if ($stmt == false) {
-                $result["insertError"] = "投稿に失敗しました。";
+                $error= "投稿に失敗しました。";
                 $pdo = NULL;
             } else {
-                $result["success"] = "投稿しました。" ;
                 $pdo = NULL;
             }
 
 
         } catch (PDOException $e) {
             print('ERROR:' . $e->getMessage());
-            $result["connectError"] = "データベースの接続に失敗しました。";
+            $error= "投稿に失敗しました";
 
         }
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,8 +91,11 @@ if(isset($_POST["submit"])){
 <form action="form.php" method="post" >
 
     <?php
-        foreach($result as $result_message){
-            print("$result_message<br/>");
+
+        if(empty($error)){
+            print("投稿に成功しました<br/>");
+        }else{
+            Print("$error<br/>");
         }
     ?>
     お名前:     <input type="text" name="contributor_name" value=""><br/>
