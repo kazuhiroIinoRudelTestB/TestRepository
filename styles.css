@@ -1,0 +1,85 @@
+.inputFormatText{
+
+    font-weight: bold;
+}
+
+.nameTextBox{
+
+    height: 15px;
+    width: 300px;
+    margin-left: 16px;
+    box-shadow: 0px 0px 2px gray inset;
+}
+
+.titleTextBox{
+
+    height: 15px;
+    width: 350px;
+    box-shadow: 0px 0px 2px gray inset;
+
+}
+
+.messageTextBox{
+
+    height: 100px;
+    width: 485px;
+    Vertical-align:top
+
+}
+
+.submit{
+
+    padding: 2px;
+    width: 60px;
+}
+
+body{
+
+    background-color: #FFFFCC;
+}
+
+.formtextbox{
+    display:inline-block;
+    background-color: white;
+    /*text-align: left;*/
+    width: 1700px;
+    margin-bottom: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    padding:15px;
+    border:1px;
+    border:solid 2px black;
+
+}
+.contributorname{
+    color: blue;
+    float:left;
+    padding-right: 8px;
+}
+
+.title{
+    color: green;
+    float: left;
+    padding-right: 8px;
+}
+.id_color{
+    color: lawngreen;
+    float: left;
+}
+
+.postedday{
+    float: left;
+    padding-right: 8px;
+}
+
+.textdata{
+    float:left;
+}
+
+.otherText{
+    float:left;
+}
+
+.postIcon{
+    float:left;
+}
