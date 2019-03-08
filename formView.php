@@ -93,14 +93,22 @@ if(isset($_POST["submit"])){
         </div>
     </div>
 </header>
-<!--    <div class="slider_Menu">-->
-<!--        <div class="slider_Space"></div>-->
-<!--        <div class="slider_content" id="slider_yellow"></div>-->
-<!--        <div class="slider_content" id="slider_red"></div>-->
-<!--        <div class="slider_content" id="slider_blue"></div>-->
-<!--        <div class="slider_content" id="slider_green"></div>-->
-<!--        <div class="slider_content" id="slider_black"></div>-->
-<!--    </div>-->
+    <div class="slider_Menu">
+        <div class="slider_Space">
+            <div class="output_content drop_slider" id="slider_yellow"></div>
+            <div class="output_content" id="slider_red"></div>
+            <div class="output_content" id="slider_blue"></div>
+            <div class="hidden_content" id="slider_green"></div>
+            <div class="hidden_content" id="slider_black"></div>
+        </div>
+        <div class="slider_Controler">
+            <div class="slider_operation current_controler" id="slider_left"></div>
+            <div class="slider_operation" id="slider_center"></div>
+            <div class="slider_operation" id="slider_right"></div>
+        </div>
+
+
+    </div>
     <form action="form.php" method="post" >
         <?php
 
@@ -150,12 +158,104 @@ if(isset($_POST["submit"])){
     ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
+        var sliderSelect = "left";
         $('#tabMenu').find("li").on('click',function(){
             $('#tabMenu').children(".tabNode").removeClass('tab-show');
             $("#tabNode"+$(this).attr('id').replace(/test/,"")).addClass('tab-show');
             $('#tabMenu').find("li").removeClass('tab-active');
             $(this).addClass('tab-active');
         });
+
+
+        //関数化してリファクタリングする！
+        //animateの透過処理を利用してスムーズにフェードアウトさせる！
+
+        //nth-childでslider_Spaceクラスのセレクタをインデックスで指定し、
+        //左右に無限スクロールをさせた方がよいかも、、。
+        $('#slider_left').on('click',function () {
+            //console.log($(".slider_Space:nth-child(3).val());
+            if(sliderSelect === "center") {
+
+                $("#slider_yellow").removeClass('hidden_content');
+                $("#slider_yellow").addClass('output_content');
+                $("#slider_green").fadeOut(400).animate({'left': '20px'});
+                $("#slider_yello").fadeIn(400).animate({'right': '20px'});
+                $("#slider_green").addClass('hidden_content');
+                $("#slider_green").removeClass('output_content');
+                $("#slider_center").removeClass('current_controler');
+                $("#slider_left").addClass('current_controler');
+                sliderSelect = "left";
+                console.log(sliderSelect);
+            }else if(sliderSelect === "right"){
+                $("#slider_yellow").removeClass('hidden_content');
+                $("#slider_yellow").addClass('output_content');
+                $("#slider_black").fadeOut(400).animate({'left': '20px'});
+                $("#slider_yellow").fadeIn(400).animate({'right': '20px'});
+                $("#slider_black").addClass('hidden_content');
+                $("#slider_black").removeClass('output_content');
+                $("#slider_right").removeClass('current_controler');
+                $("#slider_left").addClass('current_controler');
+                sliderSelect = "left";
+                console.log(sliderSelect);
+            }
+        });
+
+        $('#slider_center').on('click',function () {
+            //console.log($(".slider_Space:nth-child(3).val());
+            if(sliderSelect === "left") {
+                $("#slider_green").removeClass('hidden_content');
+                $("#slider_green").addClass('output_content');
+                $("#slider_yellow").fadeOut(400).animate({'left': '20px'});
+                $("#slider_green").fadeIn(400).animate({'right': '20px'});
+                $("#slider_yello").addClass('hidden_content');
+                $("#slider_yello").removeClass('output_content');
+                $("#slider_left").removeClass('current_controler');
+                $("#slider_center").addClass('current_controler');
+                sliderSelect = "center";
+                console.log(sliderSelect);
+            }else if(sliderSelect === "right"){
+                $("#slider_red").removeClass('hidden_content');
+                $("#slider_red").addClass('output_content');
+                $("#slider_black").fadeOut(400).animate({'left': '20px'});
+                $("#slider_red").fadeIn(400).animate({'right': '20px'});
+                $("#slider_black").addClass('hidden_content');
+                $("#slider_black").removeClass('output_content');
+                $("#slider_right").removeClass('current_controler');
+                $("#slider_center").addClass('current_controler');
+                sliderSelect = "center";
+                console.log(sliderSelect);
+            }
+        });
+
+        $('#slider_right').on('click',function () {
+            //console.log($(".slider_Space:nth-child(3).val());
+            if(sliderSelect === "left") {
+                $("#slider_black").removeClass('hidden_content');
+                $("#slider_black").addClass('output_content');
+                $("#slider_yellow").fadeOut(400).animate({'left': '20px'});
+                $("#slider_black").fadeIn(400).animate({'right': '20px'});
+                $("#slider_yellow").addClass('hidden_content');
+                $("#slider_yellow").removeClass('output_content');
+                $("#slider_left").removeClass('current_controler');
+                $("#slider_right").addClass('current_controler');
+
+                sliderSelect = "right";
+                console.log(sliderSelect);
+            }else if(sliderSelect === "center"){
+                $("#slider_black").removeClass('hidden_content');
+                $("#slider_black").addClass('output_content');
+                $("#slider_red").fadeOut(400).animate({'left': '20px'});
+                $("#slider_black").fadeIn(400).animate({'right': '20px'});
+                $("#slider_red").addClass('hidden_content');
+                $("#slider_red").removeClass('output_content');
+                $("#slider_center").removeClass('current_controler');
+                $("#slider_right").addClass('current_controler');
+                sliderSelect = "right";
+                console.log(sliderSelect);
+            }
+        });
+
+
     </script>
 </body>
 </html>
