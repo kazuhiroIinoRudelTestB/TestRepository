@@ -28,26 +28,6 @@ if(isset($_POST["submit"])){
         $error = formCheck($textdata,"メッセージ","140");
     }
 
-/*    if($contributor_name === ""){
-        $result[] = "お名前が入力されていません";
-        $error_flag = True;
-    }else if(mb_strlen($contributor_name) > 3){
-        $result['nameOver'] = "お名前は20文字以内で書き込んでください";
-        $error_flag = True;
-    }else if($title === ""){
-        $result['titleNull'] = "タイトルが入力されていません";
-        $error_flag = True;
-    }else if(mb_strlen($title) > 5){
-        $result['titleOver'] = "タイトルは40文字以内で書き込んでください";
-        $error_flag = True;
-    }else if($textdata === ""){
-        $result['textdataNull'] = "メッセージが入力されていません";
-        $error_flag = True;
-    }else if(mb_strlen($textdata) > 5){
-        $result['textOver'] = "メッセージは140文字以内で書き込んでください";
-        $error_flag = True;
-    }*/
-
 
     if(empty($error)) {
         try {
